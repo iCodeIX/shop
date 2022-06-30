@@ -1,0 +1,11 @@
+*deliverables*
+
+header / navigation
+1. logo
+2. hamburger icon / close icon
+3. cart
+4. nav list links
+    4.1 About us
+    4.2 Products
+    4.3 Reviews
+    4.3 Contacts
