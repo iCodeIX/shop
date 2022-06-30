@@ -1,7 +1,15 @@
 *deliverables*
 
 General settings
-Color THEME : Black, Red, White 
+
+IDE: The programmer have used IDE ,to be specific VSCODE, to code the project.
+The programmer connects IDE to his/her GITHUB repository to be able to save it online
+for backup when something unfortunate happened.
+
+Color THEME : Black, Red, White  
+    In color psychology, black's color meaning is symbolic of mystery, power, elegance, and sophistication.
+    Red has a range of symbolic meanings through many different cultures, including life, health, vigor, war, courage, anger, love and religious fervor
+
 font style : 'Work Sans', sans-serif;
     When it comes to professional branding and logo design, 
     crisp sans serif fonts are definitely the way to go if you want 
@@ -9,14 +17,17 @@ font style : 'Work Sans', sans-serif;
     A sans serif is usually the best font for gym logo since it's both professional
     and versatile. ---searched via google
 
-Logo : 
+Logo : The logo of this project was created on : https://www.freelogodesign.org/
+ICONS : This project used fontawesome icons.
 
 header / navigation
 1. logo
-2. hamburger icon / close icon
-3. cart
+2. cart
+3. hamburger icon / close icon
 4. nav list links
     4.1 About us
     4.2 Products
     4.3 Reviews
     4.3 Contacts
+
+
