@@ -1,5 +1,16 @@
 *deliverables*
 
+General settings
+Color THEME : Black, Red, White 
+font style : 'Work Sans', sans-serif;
+    When it comes to professional branding and logo design, 
+    crisp sans serif fonts are definitely the way to go if you want 
+    to create a clean and modern brand image.
+    A sans serif is usually the best font for gym logo since it's both professional
+    and versatile. ---searched via google
+
+Logo : 
+
 header / navigation
 1. logo
 2. hamburger icon / close icon

@@ -16,9 +16,9 @@ a{
 
 :root{
     
-    --first-color:aliceblue;
-    --first-bground: black;
-    --first-link-color: burlywood;
+    --primary-color:#010A10;
+    --secondary-color: #A50113;
+    --text-color: #DFE2DB;
 
 }
     /* header nav */
