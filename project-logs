@@ -4,3 +4,17 @@
     2. logo
     3. cart,close,hamburger icons
     4. Font style
+
+------[2nd day] -MOBILE FIRST APPROACH 
+
+    1. Collected images for the products
+    2. Products are listed
+        Containing the following:
+        2.1 images
+        2.2 Price
+        2.3 Name
+    3. Product Options 
+        3.1 add to cart
+        3.2 quantity
+            3.2.1 increment button (functional)
+            3.2.2 decrement button (functional)
