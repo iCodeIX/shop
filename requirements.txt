@@ -20,7 +20,7 @@ font style : 'Work Sans', sans-serif;
 Logo : The logo of this project was created on : https://www.freelogodesign.org/
 ICONS : This project used fontawesome icons.
 
-header / navigation
+header / navigation part 1
 1. logo
 2. cart
 3. hamburger icon / close icon
@@ -29,5 +29,16 @@ header / navigation
     4.2 Products
     4.3 Reviews
     4.3 Contacts
+
+header / navigation part 2
+1. List all the Products
+2. Image,Name,Price
+3. Options 
+    3.1 ADD to cart
+    3.2 Add quantity
+4. Pagination
+
+Technicalities
+    1. We dont have database therefore, We create an object to be our references for products
 
 

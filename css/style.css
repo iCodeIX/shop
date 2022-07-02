@@ -32,10 +32,11 @@ a{
     margin:0 8px;
 }
 
+
     /* header nav */
 
 header{
-    position: fixed;
+    position: sticky;
     top:0;
     width: 100%;
     background-color: var(--primary-color);
@@ -79,8 +80,38 @@ header{
 }
 
 .nav-list-item a{
-    
+   
 }
+
+
+/*  PRODUCTS */
+
+.products{
+    width: 100%;
+    padding: 10px;
+}
+
+.products-list{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.product-item{
+    width: 200px;
+    height: auto;
+    padding:10px;
+}
+
+.product-image{
+    width: 200px;
+    height: 150px;
+}
+
+
+
 
 
 
