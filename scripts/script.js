@@ -98,6 +98,18 @@ decrementBtn.forEach((item, index) => {
 
 /* CART */
 
+
+//HIDE AND SHOW CART
+
+const cartModal = document.querySelector(".cart-modal");
+const cartIcon = document.querySelector(".cart-icon");
+
+cartIcon.addEventListener('click', showAndHideCart);
+
+function showAndHideCart(){
+    cartModal.classList.toggle("show-cart");
+}
+
 //add item to cart 
 
 const addToCartBtns = document.querySelectorAll(".product-add-cart-btn");
@@ -124,19 +136,61 @@ function getProductInfo(itemIndex){
 
 
 var cart = [];
-var cartItemNo = 0;
+var cartItemNoCount = 0;
+
 function addToCart(prodId,productQuantity) {
-    var cartItem = {};
-    cartItemNo++;
-    cartItem.userId = 1; // There is no login, so we used fake userId which is 1
-    cartItem.itemNo = cartItemNo;
-    cartItem.productId = parseInt(prodId);
-    cartItem.quantity = productQuantity;
-    cartItem.productImg = products[prodId-1].product_image;
+    let cartItemList = document.querySelector(".cart-item-list");
+    var cartItems = {};
+    cartItemNoCount++;
+    cartItems.userId = 1; // There is no login, so we used fake userId which is 1
+    cartItems.itemNo = cartItemNoCount;
+    cartItems.productId = parseInt(prodId);
+    cartItems.quantity = productQuantity;
 
-    cart.push(cartItem);
+    cartItems.productName = products[prodId-1].product_name;
+    cartItems.productPrice = products[prodId-1].product_price;
+    cartItems.productImg = products[prodId-1].product_image;
 
-    console.log(cart);
+    cart.push(cartItems);
+
+
+    //create each item elements
+    //dividers
+    let itemNoContainer = document.createElement("div");
+    itemNoContainer .className = "item-no-container";
+    let itemImageContainer = document.createElement("div");
+    itemImageContainer .className = "item-image-container";
+    let itemInfoContainer = document.createElement("div");
+    itemInfoContainer .className = "item-image-container";
+
+    let cartItem = document.createElement("li");
+    cartItem.className = "cart-item";
+    
+    let cartItemNo = document.createElement("p");
+    cartItemNo.className = "cart-item-no";
+    cartItemNo.innerText = cartItems.itemNo;
+
+    let cartItemImg = document.createElement("img");
+    cartItemImg.className = "cart-item-img";
+    cartItemImg.src = cartItems.productImg;
+
+    let cartItemName = document.createElement("p");
+    cartItemName.className = "cart-item-name";
+    cartItemName.innerText = cartItems.productName;
+
+    let cartItemPrice= document.createElement("span");
+    cartItemPrice.className = "cart-item-price";
+    cartItemPrice.innerText = cartItems.productPrice;
+
+    let cartItemQuantity= document.createElement("span");
+    cartItemQuantity.className = "cart-item-quantity";
+    cartItemQuantity.innerText = cartItems.quantity;
+
+    itemImageContainer.append(cartItemImg);
+    itemNoContainer.append(cartItemNo);
+    itemInfoContainer.append(cartItemName,cartItemPrice,cartItemQuantity);
+    cartItem.append(itemNoContainer,itemImageContainer,itemInfoContainer);
+    cartItemList.append(cartItem);
 }
 
 function showAddedToCartMsg() {
