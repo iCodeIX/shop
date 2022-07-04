@@ -28,6 +28,7 @@ for (let i = 0; i < products.length; i++) {
 
     let productItem = document.createElement("li");
     productItem.className = "product-item";
+    productItem.id = "product" + (1 + i);
 
     let productImage = document.createElement("img");
     productImage.className = "product-image";
@@ -93,4 +94,61 @@ decrementBtn.forEach((item, index) => {
 
     })
 })
+
+
+/* CART */
+
+//add item to cart 
+
+const addToCartBtns = document.querySelectorAll(".product-add-cart-btn");
+const addedToCartMsg = document.querySelector(".added-to-cart-modal");
+
+addToCartBtns.forEach((item, index) => {
+    item.addEventListener('click', arrow => {
+        getProductInfo(index);
+       
+        showAddedToCartMsg();
+    })
+})
+
+
+function getProductInfo(itemIndex){
+    let productItem = document.querySelectorAll(".product-item")[itemIndex];
+    let productId = productItem.id;
+    let quantity = parseInt(productItem.querySelector(".quantity-to-buy").value);
+
+    productId = productId.replace("product"," ");
+
+    addToCart(productId, quantity);
+}
+
+
+var cart = [];
+var cartItemNo = 0;
+function addToCart(prodId,productQuantity) {
+    var cartItem = {};
+    cartItemNo++;
+    cartItem.userId = 1; // There is no login, so we used fake userId which is 1
+    cartItem.itemNo = cartItemNo;
+    cartItem.productId = parseInt(prodId);
+    cartItem.quantity = productQuantity;
+    cartItem.productImg = products[prodId-1].product_image;
+
+    cart.push(cartItem);
+
+    console.log(cart);
+}
+
+function showAddedToCartMsg() {
+
+    addedToCartMsg.style.display = "block";
+    setTimeout(hideAddedToCartMsg, 2500);
+}
+
+function hideAddedToCartMsg() {
+    addedToCartMsg.style.display = "none";
+}
+
+
+
 
