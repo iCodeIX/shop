@@ -18,3 +18,12 @@
         3.2 quantity
             3.2.1 increment button (functional)
             3.2.2 decrement button (functional)
+
+-------[3rd day] -MOBILE FIRST APPROACH
+    1. Done designing product list 
+    2. Done designing cart items list
+    3. Cart is functioning correctly
+        3.1 close and open cart
+        3.2 cart Item added when add to cart was clicked
+        3.3 created an object to be a fake database for cart
+    4. Done message showing when product is added to cart     
