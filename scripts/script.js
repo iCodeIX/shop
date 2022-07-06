@@ -106,7 +106,7 @@ const cartIcon = document.querySelector(".cart-icon");
 
 cartIcon.addEventListener('click', showAndHideCart);
 
-function showAndHideCart(){
+function showAndHideCart() {
     cartModal.classList.toggle("show-cart");
 }
 
@@ -118,18 +118,18 @@ const addedToCartMsg = document.querySelector(".added-to-cart-modal");
 addToCartBtns.forEach((item, index) => {
     item.addEventListener('click', arrow => {
         getProductInfo(index);
-       
+
         showAddedToCartMsg();
     })
 })
 
 
-function getProductInfo(itemIndex){
+function getProductInfo(itemIndex) {
     let productItem = document.querySelectorAll(".product-item")[itemIndex];
     let productId = productItem.id;
     let quantity = parseInt(productItem.querySelector(".quantity-to-buy").value);
 
-    productId = productId.replace("product"," ");
+    productId = productId.replace("product", " ");
 
     addToCart(productId, quantity);
 }
@@ -138,7 +138,7 @@ function getProductInfo(itemIndex){
 var cart = [];
 var cartItemNoCount = 0;
 
-function addToCart(prodId,productQuantity) {
+function addToCart(prodId, productQuantity) {
     let cartItemList = document.querySelector(".cart-item-list");
     var cartItems = {};
     cartItemNoCount++;
@@ -147,25 +147,28 @@ function addToCart(prodId,productQuantity) {
     cartItems.productId = parseInt(prodId);
     cartItems.quantity = productQuantity;
 
-    cartItems.productName = products[prodId-1].product_name;
-    cartItems.productPrice = products[prodId-1].product_price;
-    cartItems.productImg = products[prodId-1].product_image;
+    cartItems.productName = products[prodId - 1].product_name;
+    cartItems.productPrice = products[prodId - 1].product_price;
+    cartItems.productImg = products[prodId - 1].product_image;
 
     cart.push(cartItems);
 
 
     //create each item elements
+
     //dividers
     let itemNoContainer = document.createElement("div");
-    itemNoContainer .className = "item-no-container";
+    itemNoContainer.className = "item-no-container";
     let itemImageContainer = document.createElement("div");
-    itemImageContainer .className = "item-image-container";
+    itemImageContainer.className = "item-image-container";
     let itemInfoContainer = document.createElement("div");
-    itemInfoContainer .className = "item-image-container";
+    itemInfoContainer.className = "item-info-container";
+    let itemCheckBoxContainer = document.createElement("div");
+    itemCheckBoxContainer.className = "item-checkbox-container";
 
     let cartItem = document.createElement("li");
     cartItem.className = "cart-item";
-    
+
     let cartItemNo = document.createElement("p");
     cartItemNo.className = "cart-item-no";
     cartItemNo.innerText = cartItems.itemNo;
@@ -178,19 +181,68 @@ function addToCart(prodId,productQuantity) {
     cartItemName.className = "cart-item-name";
     cartItemName.innerText = cartItems.productName;
 
-    let cartItemPrice= document.createElement("span");
+    let cartItemPrice = document.createElement("span");
     cartItemPrice.className = "cart-item-price";
     cartItemPrice.innerText = cartItems.productPrice;
 
-    let cartItemQuantity= document.createElement("span");
+    let timesSign = document.createElement("span");
+    timesSign.innerText = " x ";
+    timesSign.style.color = "#fff";
+
+
+    let cartItemQuantity = document.createElement("span");
     cartItemQuantity.className = "cart-item-quantity";
     cartItemQuantity.innerText = cartItems.quantity;
 
+    let cartItemTotal = document.createElement("p");
+    cartItemTotal.className = "cart-item-total";
+    cartItemTotal.innerText = "Total : " + cartItems.productPrice * cartItems.quantity;;
+
+    let cartItemCheckBox = document.createElement("input");
+    cartItemCheckBox.type = "checkbox";
+    cartItemCheckBox.className = "cart-item-checkbox";
+
+
+
+
     itemImageContainer.append(cartItemImg);
     itemNoContainer.append(cartItemNo);
-    itemInfoContainer.append(cartItemName,cartItemPrice,cartItemQuantity);
-    cartItem.append(itemNoContainer,itemImageContainer,itemInfoContainer);
+    itemInfoContainer.append(cartItemName, cartItemPrice, timesSign, cartItemQuantity, cartItemTotal);
+    itemCheckBoxContainer.append(cartItemCheckBox);
+    cartItem.append(itemNoContainer, itemImageContainer, itemInfoContainer, itemCheckBoxContainer);
     cartItemList.append(cartItem);
+}
+
+//select all checkboxes button
+let selectAll = document.querySelector("#select-all-checkbox");
+selectAll.addEventListener('change', (e) => {
+
+    if (e.target.checked) {
+        
+        selectAndDeselect("select");
+    }
+    else {
+       
+        selectAndDeselect("deselect");
+    }
+})
+
+//select or deselect checkboxes
+
+function selectAndDeselect(checkboxAll){
+    let checkboxes = document.querySelectorAll(".cart-item-checkbox");
+
+    if(checkboxAll == "select"){
+        checkboxes.forEach((item, index) => {
+           item.checked = true;
+        })
+    }
+    else{
+        checkboxes.forEach((item, index) => {
+            item.checked = false;
+        })
+    }
+   
 }
 
 function showAddedToCartMsg() {

@@ -1,62 +1,62 @@
-:root{
-    
-    --primary-color:#010A10;
+:root {
+
+    --primary-color: #010A10;
     --secondary-color: #A50113;
     --light-color: #DFE2DB;
     --success-color: #28A745;
     --error-color: #DE3545;
-    --global-font:'Work Sans', sans-serif;
+    --global-font: 'Work Sans', sans-serif;
 
 }
 
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: var(--global-font);
 }
 
-li{
+li {
     list-style-type: none;
 }
 
 
-a{
+a {
     text-decoration: none;
     color: var(--secondary-color);
 }
 
 
-.icons{
-    color:var(--light-color);
+.icons {
+    color: var(--light-color);
     font-size: 18px;
-    margin:0 8px;
+    margin: 0 8px;
     cursor: pointer;
 }
 
 
-    /* header nav */
+/* header nav */
 
-header{
+header {
     position: sticky;
-    top:0;
+    top: 0;
     width: 100%;
     background-color: var(--primary-color);
-    padding:10px;
+    padding: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
 
 }
 
-.logo{
+.logo {
     margin-right: auto;
     max-width: 95px;
     height: 30px;
 }
 
 
-.header-nav{
+.header-nav {
     display: none;
     background-color: var(--primary-color);
     min-width: 70%;
@@ -67,85 +67,148 @@ header{
     right: 0;
 }
 
-.close-nav-icon{
-   position: absolute;
-   top: 15px;
-   right: 10px;
-   cursor: pointer;
+.close-nav-icon {
+    position: absolute;
+    top: 15px;
+    right: 10px;
+    cursor: pointer;
 }
 
-.nav-list{
+.nav-list {
     text-align: center;
 }
 
-.nav-list-item{
+.nav-list-item {
     margin-top: 20px;
 }
 
-.nav-list-item a{
-   color:var(--secondary-color);
+.nav-list-item a {
+    color: var(--secondary-color);
 }
 
 /* CART */
 
-.cart-modal{
+.cart-modal {
     display: none;
-    position:absolute;
-    top:40px;
-    right: 20px;
-    width: 300px;
+    position: absolute;
+    top: 40px;
+    right: 0px;
+    width: 350px;
     background-color: var(--primary-color);
     padding: 20px;
-    border-radius: 0 0 20px 20px;
+   
 }
 
-.show-cart{
+.show-cart {
     display: block;
 }
 
-.cart-label{
-    color:var(--secondary-color);
+.cart-label {
+    color: var(--secondary-color);
 }
 
-.cart-item-list{
+.cart-item-list {
     overflow: auto;
-    height: 400px;
+    height: 300px;
 }
 
-.cart-item{
+.cart-item {
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 2px solid var(--success-color);
-    padding:10px;
+    border: 1px solid var(--success-color);
+    padding: 2px;
     margin: 5px 5px;
 }
 
-.cart-item > div{
-    padding:5px;
+.cart-item>div {
+    padding: 5px;
 }
 
-.cart-item-no,.cart-item-name, .cart-item-quantity, .cart-item-price{
+
+
+.cart-item-no,
+.cart-item-name,
+.cart-item-quantity,
+.cart-item-price,
+.cart-item-total {
     color: var(--light-color);
 }
 
-.cart-item-name, .cart-item-quantity, .cart-item-price{
+.cart-item-no {
+    width: 30px;
+    color: var(--light-color);
+    text-align: center;
+}
+
+.cart-item-name,
+.cart-item-quantity,
+.cart-item-price {
     font-size: 12px;
 }
 
-.cart-item-img{
-    width: 100px;
-    height: 70px;
+.cart-item-img {
+    width: 70px;
+    height: 50px;
 }
 
+
+.item-image-container {
+    width: 100px;
+}
+
+.item-info-container {
+    width: 150px;
+}
+
+.item-checkbox-container {
+    text-align: center;
+    cursor: pointer;
+    width: 30px;
+}
+
+
+.checkout-container{
+    display: flex;
+    background-color: var(--secondary-color);
+    justify-content:center;
+    align-items: center;
+    padding: 10px;
+
+}
+
+.checkout-btn{
+    cursor: pointer;
+    background-color: var(--primary-color);
+    color: var(--light-color);
+    outline: 0;
+    border: 0;
+    padding:10px;
+    margin-right: auto;
+    border-radius: 0 30px 30px 0;
+}
+
+.checkout-btn:hover{
+    background-color: var(--light-color);
+    color: var(--secondary-color)
+}
+
+#select-all-checkbox{
+    cursor: pointer;
+}
+
+.select-all-text{
+    color: var(--light-color);
+    margin: 0 0 0 10px;
+}
 /*  PRODUCTS */
 
-.products{
+.products {
     width: 100%;
     padding: 10px;
 }
 
-.products-list{
+.products-list {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -153,91 +216,84 @@ header{
     gap: 20px 10px;
 }
 
-.product-item{
+.product-item {
     width: 200px;
-    padding:10px;
+    padding: 10px;
     border: 1px solid #ccc;
     text-align: center;
 }
 
-.product-image{
+.product-image {
     width: 150px;
     height: 150px;
 }
 
 
-.product-name{
+.product-name {
     font-weight: 700;
     height: 50px;
-    margin:5px 0;
+    margin: 5px 0;
 }
 
-.product-price::before{
+.product-price::before {
     content: "\20B1";
 }
 
-.product-price{
+.product-price {
     font-weight: 700;
     text-align: right;
-    padding:10px;
-    margin:5px 0;
+    padding: 10px;
+    margin: 5px 0;
 }
 
-.quantity-decrease-btn, .quantity-increase-btn{
+.quantity-decrease-btn,
+.quantity-increase-btn {
     width: 30px;
     font-weight: 700;
-    padding:5px;
+    padding: 5px;
 }
 
-.quantity-decrease-btn, .quantity-increase-btn{
+.quantity-decrease-btn,
+.quantity-increase-btn {
     background-color: var(--secondary-color);
-    color:var(--light-color);
-    border:2px solid var(--secondary-color);
-    outline:0;
+    color: var(--light-color);
+    border: 2px solid var(--secondary-color);
+    outline: 0;
 }
 
-.quantity-to-buy{
+.quantity-to-buy {
     margin: 0 2px;
     width: 50px;
     font-weight: 700;
-    padding:5px;
+    padding: 5px;
 }
 
-.product-add-cart-btn{
+.product-add-cart-btn {
     display: block;
     background-color: #010A10;
     font-weight: 700;
     width: 100%;
-    margin:15px 0 0 0;
+    margin: 15px 0 0 0;
     color: var(--light-color);
     padding: 10px;
-    border:0;
-    outline:0;
+    border: 0;
+    outline: 0;
     cursor: pointer;
 }
 
-.added-to-cart-modal{
+.added-to-cart-modal {
     display: none;
     width: 300px;
     position: fixed;
-    top:50%;
+    top: 50%;
     left: 50%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
 }
 
-.added-to-cart-msg{
-  
+.added-to-cart-msg {
+
     background-color: var(--success-color);
     color: var(--light-color);
-    padding:10px;
+    padding: 10px;
     text-align: center;
 }
-
-
-
-
-
-
-
-
-
