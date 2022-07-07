@@ -27,3 +27,15 @@
         3.2 cart Item added when add to cart was clicked
         3.3 created an object to be a fake database for cart
     4. Done message showing when product is added to cart     
+
+    -------[4th day] -MOBILE FIRST APPROACH
+    1. Done functionality on cart
+            1.1 When item is already added on the cart, the item should not be added again
+            (Difficulty found)
+                - the array of objects was not iterating because of the return statement inside the loop
+                    Solution: i removed the return then i declared a variable , i named it found and assign a value of 0 
+                              The found variable will increment to 1 when the looped object has found a product id value in the cart object the same of
+                              the product id of the product the user trying to add .
+                              if found is greater than 0 then this condition returns true (meaning same product id found) 
+                              if not the function will return false
+

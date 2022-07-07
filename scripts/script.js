@@ -118,29 +118,58 @@ const addedToCartMsg = document.querySelector(".added-to-cart-modal");
 addToCartBtns.forEach((item, index) => {
     item.addEventListener('click', arrow => {
         getProductInfo(index);
-
         showAddedToCartMsg();
     })
 })
 
+
+var cart = [];
 
 function getProductInfo(itemIndex) {
     let productItem = document.querySelectorAll(".product-item")[itemIndex];
     let productId = productItem.id;
     let quantity = parseInt(productItem.querySelector(".quantity-to-buy").value);
 
-    productId = productId.replace("product", " ");
+    productId = parseInt(productId.replace("product", ""));
 
-    addToCart(productId, quantity);
+
+    if (cart.length == 0) {
+        addToCart(productId, quantity);
+    }
+    else {
+        var existOrNot = checkItemIfExistOnCart(productId);
+
+        if (existOrNot == false) {
+            addToCart(productId, quantity);
+        }
+    }
+
 }
 
 
-var cart = [];
+function checkItemIfExistOnCart(productId) {
+    var found = 0;
+
+    for (var x = 0; x < cart.length; x++) {
+        if (cart[x].productId == productId) {
+            found++;
+        }
+    }
+
+    if (found == 1) {
+        return true;
+    }
+
+    return false;
+}
+
+
 var cartItemNoCount = 0;
 
 function addToCart(prodId, productQuantity) {
+    let cartItems = {};
     let cartItemList = document.querySelector(".cart-item-list");
-    var cartItems = {};
+
     cartItemNoCount++;
     cartItems.userId = 1; // There is no login, so we used fake userId which is 1
     cartItems.itemNo = cartItemNoCount;
@@ -202,9 +231,6 @@ function addToCart(prodId, productQuantity) {
     cartItemCheckBox.type = "checkbox";
     cartItemCheckBox.className = "cart-item-checkbox";
 
-
-
-
     itemImageContainer.append(cartItemImg);
     itemNoContainer.append(cartItemNo);
     itemInfoContainer.append(cartItemName, cartItemPrice, timesSign, cartItemQuantity, cartItemTotal);
@@ -213,36 +239,37 @@ function addToCart(prodId, productQuantity) {
     cartItemList.append(cartItem);
 }
 
+
 //select all checkboxes button
 let selectAll = document.querySelector("#select-all-checkbox");
 selectAll.addEventListener('change', (e) => {
 
     if (e.target.checked) {
-        
+
         selectAndDeselect("select");
     }
     else {
-       
+
         selectAndDeselect("deselect");
     }
 })
 
 //select or deselect checkboxes
 
-function selectAndDeselect(checkboxAll){
+function selectAndDeselect(checkboxAll) {
     let checkboxes = document.querySelectorAll(".cart-item-checkbox");
 
-    if(checkboxAll == "select"){
+    if (checkboxAll == "select") {
         checkboxes.forEach((item, index) => {
-           item.checked = true;
+            item.checked = true;
         })
     }
-    else{
+    else {
         checkboxes.forEach((item, index) => {
             item.checked = false;
         })
     }
-   
+
 }
 
 function showAddedToCartMsg() {
