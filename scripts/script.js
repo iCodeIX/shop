@@ -125,6 +125,7 @@ addToCartBtns.forEach((item, index) => {
 
 var cart = [];
 
+//getting info(product id of the clicked item) from products list  after add to cart was clicked. 
 function getProductInfo(itemIndex) {
     let productItem = document.querySelectorAll(".product-item")[itemIndex];
     let productId = productItem.id;
@@ -141,6 +142,9 @@ function getProductInfo(itemIndex) {
 
         if (existOrNot == false) {
             addToCart(productId, quantity);
+        }
+        else {
+            addToCartItemQuantity(productId, quantity);
         }
     }
 
@@ -164,15 +168,25 @@ function checkItemIfExistOnCart(productId) {
 }
 
 
-var cartItemNoCount = 0;
+function addToCartItemQuantity(prodId, productQuantity) {
 
+    for (let c = 0; c < cart.length; c++) {
+
+        if (prodId == cart[c].productId) {
+            let newQuantity = parseInt(cart[c].quantity) + parseInt(productQuantity);
+            cart[c].quantity = newQuantity;
+        }
+    }
+
+    displayCartItems();
+}
+
+
+// this is adding item to cart array of objects(items)
 function addToCart(prodId, productQuantity) {
     let cartItems = {};
-    let cartItemList = document.querySelector(".cart-item-list");
 
-    cartItemNoCount++;
     cartItems.userId = 1; // There is no login, so we used fake userId which is 1
-    cartItems.itemNo = cartItemNoCount;
     cartItems.productId = parseInt(prodId);
     cartItems.quantity = productQuantity;
 
@@ -181,67 +195,72 @@ function addToCart(prodId, productQuantity) {
     cartItems.productImg = products[prodId - 1].product_image;
 
     cart.push(cartItems);
+    displayCartItems();
+}
 
-
+//displaying array of object(items) to the cart
+function displayCartItems() {
     //create each item elements
-
     //dividers
-    let itemNoContainer = document.createElement("div");
-    itemNoContainer.className = "item-no-container";
-    let itemImageContainer = document.createElement("div");
-    itemImageContainer.className = "item-image-container";
-    let itemInfoContainer = document.createElement("div");
-    itemInfoContainer.className = "item-info-container";
-    let itemCheckBoxContainer = document.createElement("div");
-    itemCheckBoxContainer.className = "item-checkbox-container";
+    let cartItemList = document.querySelector(".cart-item-list");
+    /* because we are appending the items elements in the cart list each time we display items, we need to
+    empty the parent element first so it will not append to the prior appended (old data) 
+    display items  */
+    cartItemList.innerHTML = "";
+    for (let c = 0; c < cart.length; c++) {
 
-    let cartItem = document.createElement("li");
-    cartItem.className = "cart-item";
+        let itemImageContainer = document.createElement("div");
+        itemImageContainer.className = "item-image-container";
+        let itemInfoContainer = document.createElement("div");
+        itemInfoContainer.className = "item-info-container";
+        let itemCheckBoxContainer = document.createElement("div");
+        itemCheckBoxContainer.className = "item-checkbox-container";
 
-    let cartItemNo = document.createElement("p");
-    cartItemNo.className = "cart-item-no";
-    cartItemNo.innerText = cartItems.itemNo;
+        let cartItem = document.createElement("li");
+        cartItem.className = "cart-item";
 
-    let cartItemImg = document.createElement("img");
-    cartItemImg.className = "cart-item-img";
-    cartItemImg.src = cartItems.productImg;
+        let cartItemImg = document.createElement("img");
+        cartItemImg.className = "cart-item-img";
+        cartItemImg.src = cart[c].productImg;
 
-    let cartItemName = document.createElement("p");
-    cartItemName.className = "cart-item-name";
-    cartItemName.innerText = cartItems.productName;
+        let cartItemName = document.createElement("p");
+        cartItemName.className = "cart-item-name";
+        cartItemName.innerText = cart[c].productName;
 
-    let cartItemPrice = document.createElement("span");
-    cartItemPrice.className = "cart-item-price";
-    cartItemPrice.innerText = cartItems.productPrice;
+        let cartItemPrice = document.createElement("span");
+        cartItemPrice.className = "cart-item-price";
+        cartItemPrice.innerText = cart[c].productPrice;
 
-    let timesSign = document.createElement("span");
-    timesSign.innerText = " x ";
-    timesSign.style.color = "#fff";
+        let timesSign = document.createElement("span");
+        timesSign.innerText = " x ";
+        timesSign.style.color = "#fff";
 
 
-    let cartItemQuantity = document.createElement("span");
-    cartItemQuantity.className = "cart-item-quantity";
-    cartItemQuantity.innerText = cartItems.quantity;
+        let cartItemQuantity = document.createElement("span");
+        cartItemQuantity.className = "cart-item-quantity";
+        cartItemQuantity.innerText = cart[c].quantity;
 
-    let cartItemTotal = document.createElement("p");
-    cartItemTotal.className = "cart-item-total";
-    cartItemTotal.innerText = "Total : " + cartItems.productPrice * cartItems.quantity;;
+        let cartItemTotal = document.createElement("p");
+        cartItemTotal.className = "cart-item-total";
+        cartItemTotal.innerText = "Total : " + cart[c].productPrice * cart[c].quantity;;
 
-    let cartItemCheckBox = document.createElement("input");
-    cartItemCheckBox.type = "checkbox";
-    cartItemCheckBox.className = "cart-item-checkbox";
+        let cartItemCheckBox = document.createElement("input");
+        cartItemCheckBox.type = "checkbox";
+        cartItemCheckBox.className = "cart-item-checkbox";
 
-    itemImageContainer.append(cartItemImg);
-    itemNoContainer.append(cartItemNo);
-    itemInfoContainer.append(cartItemName, cartItemPrice, timesSign, cartItemQuantity, cartItemTotal);
-    itemCheckBoxContainer.append(cartItemCheckBox);
-    cartItem.append(itemNoContainer, itemImageContainer, itemInfoContainer, itemCheckBoxContainer);
-    cartItemList.append(cartItem);
+        itemImageContainer.append(cartItemImg);
+        itemInfoContainer.append(cartItemName, cartItemPrice, timesSign, cartItemQuantity, cartItemTotal);
+        itemCheckBoxContainer.append(cartItemCheckBox);
+        cartItem.append(itemImageContainer, itemInfoContainer, itemCheckBoxContainer);
+        cartItemList.append(cartItem);
+    }
+
+
 }
 
 
 //select all checkboxes button
-let selectAll = document.querySelector("#select-all-checkbox");
+var selectAll = document.querySelector("#select-all-checkbox");
 selectAll.addEventListener('change', (e) => {
 
     if (e.target.checked) {
@@ -253,6 +272,9 @@ selectAll.addEventListener('change', (e) => {
         selectAndDeselect("deselect");
     }
 })
+
+
+
 
 //select or deselect checkboxes
 
@@ -272,6 +294,55 @@ function selectAndDeselect(checkboxAll) {
 
 }
 
+
+//get selected items
+
+function getSelectedItems() {
+    let checkboxes = document.querySelectorAll(".cart-item-checkbox");
+    let selectedItems = [];
+    for (let s = 0; s < checkboxes.length; s++) {
+        if (checkboxes[s].checked) {
+            selectedItems.push(s);
+        }
+    }
+
+    return selectedItems;
+}
+
+//delete item/s in the cart
+var deleteBtn = document.querySelector(".delete-icon");
+
+deleteBtn.addEventListener('click', arrow => {
+    var itemsToDelete = getSelectedItems();
+
+    const indexSet = new Set(itemsToDelete);
+
+    //for removing data
+    cart = cart.filter((value, i) => !indexSet.has(i));
+
+
+    /*for removing item display in the cart
+    using nested for loop , loop cartItems and itemsTodelete then each loop of cart item 
+    compare it to the elements in the itemstodelete */
+
+    let cartItems = document.querySelectorAll(".cart-item");
+
+    for (let p = 0; p < cartItems.length; p++) {
+        for (let i = 0; i < itemsToDelete.length; i++) {
+            if (p == itemsToDelete[i]) {
+                console.log(itemsToDelete[i], "=", p);
+                cartItems[p].remove();
+            }
+        }
+
+    }
+
+
+
+})
+
+
+//adding message pop up
 function showAddedToCartMsg() {
 
     addedToCartMsg.style.display = "block";
