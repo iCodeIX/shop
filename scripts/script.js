@@ -71,7 +71,7 @@ for (let i = 0; i < products.length; i++) {
 const incrementBtn = document.querySelectorAll(".quantity-increase-btn");
 var quantity = 1;
 
-//increment buttons 
+//increment quantity buttons 
 incrementBtn.forEach((item, index) => {
     item.addEventListener('click', arrow => {
         quantity = parseInt(incrementBtn[index].previousElementSibling.value);
@@ -83,7 +83,7 @@ incrementBtn.forEach((item, index) => {
 
 const decrementBtn = document.querySelectorAll(".quantity-decrease-btn");
 
-//decrement buttons
+//decrement quantity buttons
 decrementBtn.forEach((item, index) => {
     item.addEventListener('click', arrow => {
         quantity = parseInt(decrementBtn[index].nextElementSibling.value);
@@ -97,8 +97,6 @@ decrementBtn.forEach((item, index) => {
 
 
 /* CART */
-
-
 //HIDE AND SHOW CART
 
 const cartModal = document.querySelector(".cart-modal");
@@ -163,7 +161,6 @@ function checkItemIfExistOnCart(productId) {
     if (found == 1) {
         return true;
     }
-
     return false;
 }
 
