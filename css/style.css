@@ -223,11 +223,25 @@ header {
     width: 100%;
     padding: 10px;
 }
+.search-product-input{
+    width: 100%;
+    padding: 10px;
+}
 
+.search-product-input input[type="text"]{
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    outline: 0;
+}
 .product-label{
     font-weight: 600;
     color: var(--primary-color);
     margin: 10px 0;
+}
+
+.no-item-message{
+    display: none;
 }
 .products-list {
     display: flex;
