@@ -20,26 +20,49 @@ function closeNavMenu() {
 
 /* PRODUCTS SECTION */
 
-//populate products list with items
 
 //intellisense search 
 
 var searchProductInput = document.querySelector("#productInput");
 
-var keyWordToSearch = "";
-
 searchProductInput.addEventListener("keyup", event => {
+    let keyWordToSearch = "";
     keyWordToSearch = event.target.value;
-    let productItem = document.querySelectorAll(".product-item");
 
-    if(productItem.length == 0){
-        let noItemMsg = document.querySelector(".no-item-message");
-        noItemMsg.style.display = "block";
-    }
-
-    displayProducts();
+    filterProducts(keyWordToSearch);
 });
 
+//filterproducts , when no products to show , show the no item found message
+function filterProducts(keyWord) {
+
+    let productName = document.querySelectorAll(".product-name");
+    let productItem = document.querySelectorAll(".product-item");
+    let noItemMsg = document.querySelector(".no-item-message");
+    var count = 0;
+    keyWord = keyWord.toLowerCase();
+    for (let n = 0; n < productName.length; n++) {
+        let name = productName[n].innerHTML;
+
+        if (name.toLowerCase().includes(keyWord)) {
+            noItemMsg.style.display = "none";
+            productItem[n].style.display = "block";
+        }
+        else {
+            productItem[n].style.display = "none";
+            count++;
+
+        }
+    }
+
+    if(count == productItem.length){
+       
+        noItemMsg.style.display = "block";
+    }
+}
+
+
+
+//populate products list with items
 
 const productsList = document.querySelector(".products-list");
 
@@ -48,59 +71,71 @@ displayProducts();
 function displayProducts() {
 
     productsList.innerHTML = "";
-    
-    
+
+
     for (let i = 0; i < products.length; i++) {
-        let productName = products[i].product_name.toLowerCase();
-        let check = productName.includes(keyWordToSearch.toLowerCase());
-
-        if (check) {
-            let productItem = document.createElement("li");
-            productItem.className = "product-item";
-            productItem.id = "product" + (1 + i);
-
-            let productImage = document.createElement("img");
-            productImage.className = "product-image";
-            productImage.src = products[i].product_image;
 
 
-            let productName = document.createElement("p");
-            productName.className = "product-name";
-            productName.innerText = products[i].product_name;
+        let productItem = document.createElement("li");
+        productItem.className = "product-item";
+        productItem.id = "product" + (1 + i);
 
-            let productPrice = document.createElement("p");
-            productPrice.className = "product-price";
-            productPrice.innerText = products[i].product_price;
-
-            let productQuantityToBuy = document.createElement("input");
-            productQuantityToBuy.type = "number";
-            productQuantityToBuy.className = "quantity-to-buy";
-            productQuantityToBuy.value = 1;
-
-            let productDecrementQuantityToBuyBtn = document.createElement("button");
-            productDecrementQuantityToBuyBtn.className = "quantity-decrease-btn";
-            productDecrementQuantityToBuyBtn.innerText = "-";
-
-            let productIncrementQuantityToBuyBtn = document.createElement("button");
-            productIncrementQuantityToBuyBtn.className = "quantity-increase-btn";
-            productIncrementQuantityToBuyBtn.innerText = "+";
-
-            let addToCartBtn = document.createElement("button");
-            addToCartBtn.className = "product-add-cart-btn";
-            addToCartBtn.innerText = "Add to cart";
-
-            productItem.append(productImage, productName, productPrice, productDecrementQuantityToBuyBtn
-                , productQuantityToBuy, productIncrementQuantityToBuyBtn, addToCartBtn);
-            productsList.append(productItem);
+        let productImage = document.createElement("img");
+        productImage.className = "product-image";
+        productImage.src = products[i].product_image;
 
 
-        }
+        let productName = document.createElement("p");
+        productName.className = "product-name";
+        productName.innerText = products[i].product_name;
+
+        let productPrice = document.createElement("p");
+        productPrice.className = "product-price";
+        productPrice.innerText = products[i].product_price;
+
+        let productQuantityToBuy = document.createElement("input");
+        productQuantityToBuy.type = "number";
+        productQuantityToBuy.className = "quantity-to-buy";
+        productQuantityToBuy.value = 1;
+
+        let productDecrementQuantityToBuyBtn = document.createElement("button");
+        productDecrementQuantityToBuyBtn.className = "quantity-decrease-btn";
+        productDecrementQuantityToBuyBtn.innerText = "-";
+
+        let productIncrementQuantityToBuyBtn = document.createElement("button");
+        productIncrementQuantityToBuyBtn.className = "quantity-increase-btn";
+        productIncrementQuantityToBuyBtn.innerText = "+";
+
+        let addToCartBtn = document.createElement("button");
+        addToCartBtn.className = "product-add-cart-btn";
+        addToCartBtn.innerText = "Add to cart";
+
+        productItem.append(productImage, productName, productPrice, productDecrementQuantityToBuyBtn
+            , productQuantityToBuy, productIncrementQuantityToBuyBtn, addToCartBtn);
+        productsList.append(productItem);
 
 
     }
 
 
 }
+
+//add item to cart 
+
+const addToCartBtns = document.querySelectorAll(".product-add-cart-btn");
+const addedToCartMsg = document.querySelector(".added-to-cart-modal");
+
+function addToCartBtnsFunctions() {
+    addToCartBtns.forEach((item, index) => {
+        item.addEventListener('click', arrow => {
+            getProductInfo(index);
+            showAddedToCartMsg();
+            console.log("click");
+        })
+    })
+}
+
+addToCartBtnsFunctions();
 
 
 // increment and decrement of quantity to buy
@@ -145,17 +180,7 @@ function showAndHideCart() {
     cartModal.classList.toggle("show-cart");
 }
 
-//add item to cart 
 
-const addToCartBtns = document.querySelectorAll(".product-add-cart-btn");
-const addedToCartMsg = document.querySelector(".added-to-cart-modal");
-
-addToCartBtns.forEach((item, index) => {
-    item.addEventListener('click', arrow => {
-        getProductInfo(index);
-        showAddedToCartMsg();
-    })
-})
 
 
 var cart = [];
