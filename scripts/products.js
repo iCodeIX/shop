@@ -59,5 +59,7 @@ let products = [
             "product_price":1263,
             "product_image":"images/products/product_10.jpg"
         }
+        
+        
 
     ]

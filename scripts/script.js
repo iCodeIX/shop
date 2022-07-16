@@ -1,7 +1,7 @@
 const hamburgerIcon = document.querySelector(".hamburger-icon");
 const closeNavIcon = document.querySelector(".close-nav-icon");
 const navMenu = document.querySelector(".header-nav");
-
+var origArray = products;
 /*products variables */
 
 
@@ -21,64 +21,99 @@ function closeNavMenu() {
 /* PRODUCTS SECTION */
 
 
-//intellisense search 
+// search  products
 
 var searchProductInput = document.querySelector("#productInput");
+var searchBtn = document.querySelector("#searchBtn");
 
-searchProductInput.addEventListener("keyup", event => {
+searchBtn.addEventListener("click", arrow => {
     let keyWordToSearch = "";
-    keyWordToSearch = event.target.value;
+    keyWordToSearch = searchProductInput.value;
 
-    filterProducts(keyWordToSearch);
+    filteredProds = searchProducts(products, keyWordToSearch);
+    displayProducts(filteredProds);
+
 });
 
 //filterproducts , when no products to show , show the no item found message
-function filterProducts(keyWord) {
-
-    let productName = document.querySelectorAll(".product-name");
-    let productItem = document.querySelectorAll(".product-item");
-    let noItemMsg = document.querySelector(".no-item-message");
-    var count = 0;
+function searchProducts(prods, keyWord) {
     keyWord = keyWord.toLowerCase();
-    for (let n = 0; n < productName.length; n++) {
-        let name = productName[n].innerHTML;
+    let newArr = [];
+    for (let p = 0; p < prods.length; p++) {
+        let prodName = prods[p].product_name;
 
-        if (name.toLowerCase().includes(keyWord)) {
-            noItemMsg.style.display = "none";
-            productItem[n].style.display = "block";
-        }
-        else {
-            productItem[n].style.display = "none";
-            count++;
-
+        if (prodName.toLowerCase().includes(keyWord)) {
+            newArr.push(prods[p]);
         }
     }
-
-    if(count == productItem.length){
-       
-        noItemMsg.style.display = "block";
-    }
+    prods = newArr;
+    return prods;
 }
 
 
+var pagesCount;
+var productsPage = document.querySelector(".products-pages-list");
+
+//products pagination
+function paginate(array, page_size, page_number) {
+    pagesCount = Math.round(array.length / page_size);
+    return array.slice((page_number - 1) * page_size, page_number * page_size);
+}
+
+// when page reload, automatically apply pagination for products
+products = paginate(products, 6, 1);
+// when page reload , after paginate invoked, call createPages for the user interface part
+createPages(pagesCount);
+
+//create pages to navigate
+function createPages(pagesCount) {
+    for (let p = 1; p <= pagesCount; p++) {
+        let pageItem = document.createElement("li");
+        pageItem.classList.add("page-item");
+        pageItem.innerHTML = p;
+
+        productsPage.appendChild(pageItem);
+    }
+
+}
+
+//pages btn 
+
+var pagesBtn = document.querySelectorAll(".page-item");
+
+//getting the button page index
+pagesBtn.forEach((item, index) => {
+    item.addEventListener("click", () => {
+        displayNewPage(index);
+        addToCartBtnsFunctions();
+        incrementQuantity();
+        decrementQuantity();
+    });
+
+});
+
+// get the page index then call again the products display to get the appropriate page display
+function displayNewPage(pageIndex) {
+    newPageProducts = paginate(origArray, 6, pageIndex + 1);
+    displayProducts(newPageProducts);
+}
 
 //populate products list with items
 
 const productsList = document.querySelector(".products-list");
 
-displayProducts();
+displayProducts(products);
 
-function displayProducts() {
+function displayProducts(products) {
 
     productsList.innerHTML = "";
-
 
     for (let i = 0; i < products.length; i++) {
 
 
         let productItem = document.createElement("li");
         productItem.className = "product-item";
-        productItem.id = "product" + (1 + i);
+        productItem.id = "product" + products[i].product_id;
 
         let productImage = document.createElement("img");
         productImage.className = "product-image";
@@ -119,69 +154,24 @@ function displayProducts() {
 
 
 }
+/* CART */
 
-//add item to cart 
 
-const addToCartBtns = document.querySelectorAll(".product-add-cart-btn");
+//cart buttons, when click do certain calls of functions
 const addedToCartMsg = document.querySelector(".added-to-cart-modal");
-
 function addToCartBtnsFunctions() {
+    let addToCartBtns = document.querySelectorAll(".product-add-cart-btn");
+
     addToCartBtns.forEach((item, index) => {
         item.addEventListener('click', arrow => {
             getProductInfo(index);
             showAddedToCartMsg();
-            console.log("click");
         })
     })
 }
 
+//call add to cart buttons when page loaded
 addToCartBtnsFunctions();
-
-
-// increment and decrement of quantity to buy
-
-const incrementBtn = document.querySelectorAll(".quantity-increase-btn");
-var quantity = 1;
-
-//increment quantity buttons 
-incrementBtn.forEach((item, index) => {
-    item.addEventListener('click', arrow => {
-        quantity = parseInt(incrementBtn[index].previousElementSibling.value);
-        quantity++;
-        incrementBtn[index].previousElementSibling.value = quantity;
-
-    })
-})
-
-const decrementBtn = document.querySelectorAll(".quantity-decrease-btn");
-
-//decrement quantity buttons
-decrementBtn.forEach((item, index) => {
-    item.addEventListener('click', arrow => {
-        quantity = parseInt(decrementBtn[index].nextElementSibling.value);
-        if (quantity != 1) {
-            quantity--;
-            decrementBtn[index].nextElementSibling.value = quantity;
-        }
-
-    })
-})
-
-
-/* CART */
-//HIDE AND SHOW CART
-
-const cartModal = document.querySelector(".cart-modal");
-const cartIcon = document.querySelector(".cart-icon");
-
-cartIcon.addEventListener('click', showAndHideCart);
-
-function showAndHideCart() {
-    cartModal.classList.toggle("show-cart");
-}
-
-
-
 
 var cart = [];
 
@@ -189,10 +179,10 @@ var cart = [];
 function getProductInfo(itemIndex) {
     let productItem = document.querySelectorAll(".product-item")[itemIndex];
     let productId = productItem.id;
+
     let quantity = parseInt(productItem.querySelector(".quantity-to-buy").value);
 
     productId = parseInt(productId.replace("product", ""));
-
 
     if (cart.length == 0) {
         addToCart(productId, quantity);
@@ -210,6 +200,7 @@ function getProductInfo(itemIndex) {
 
 }
 
+//check if product already exist on cart items
 
 function checkItemIfExistOnCart(productId) {
     var found = 0;
@@ -224,6 +215,22 @@ function checkItemIfExistOnCart(productId) {
         return true;
     }
     return false;
+}
+
+// this is adding item to cart array of objects(items)
+function addToCart(prodId, productQuantity) {
+    let cartItems = {};
+
+    cartItems.userId = 1; // There is no login, so we used fake userId which is 1
+    cartItems.productId = parseInt(prodId);
+    cartItems.quantity = productQuantity;
+
+    cartItems.productName = origArray[prodId - 1].product_name;
+    cartItems.productPrice = origArray[prodId - 1].product_price;
+    cartItems.productImg = origArray[prodId - 1].product_image;
+
+    cart.push(cartItems);
+    displayCartItems();
 }
 
 
@@ -241,20 +248,49 @@ function addToCartItemQuantity(prodId, productQuantity) {
 }
 
 
-// this is adding item to cart array of objects(items)
-function addToCart(prodId, productQuantity) {
-    let cartItems = {};
+var quantity = 1;
 
-    cartItems.userId = 1; // There is no login, so we used fake userId which is 1
-    cartItems.productId = parseInt(prodId);
-    cartItems.quantity = productQuantity;
+// increment and decrement of quantity to buy
 
-    cartItems.productName = products[prodId - 1].product_name;
-    cartItems.productPrice = products[prodId - 1].product_price;
-    cartItems.productImg = products[prodId - 1].product_image;
+function incrementQuantity() {
+    //increment quantity buttons 
+    let incrementBtn = document.querySelectorAll(".quantity-increase-btn");
+    incrementBtn.forEach((item, index) => {
+        item.addEventListener('click', arrow => {
+            quantity = parseInt(incrementBtn[index].previousElementSibling.value);
+            quantity++;
+            incrementBtn[index].previousElementSibling.value = quantity;
 
-    cart.push(cartItems);
-    displayCartItems();
+        })
+    })
+}
+
+function decrementQuantity() {
+    const decrementBtn = document.querySelectorAll(".quantity-decrease-btn");
+
+    //decrement quantity buttons
+    decrementBtn.forEach((item, index) => {
+        item.addEventListener('click', arrow => {
+            quantity = parseInt(decrementBtn[index].nextElementSibling.value);
+            if (quantity != 1) {
+                quantity--;
+                decrementBtn[index].nextElementSibling.value = quantity;
+            }
+
+        })
+    })
+}
+
+
+//HIDE AND SHOW CART
+
+const cartModal = document.querySelector(".cart-modal");
+const cartIcon = document.querySelector(".cart-icon");
+
+cartIcon.addEventListener('click', showAndHideCart);
+
+function showAndHideCart() {
+    cartModal.classList.toggle("show-cart");
 }
 
 
