@@ -208,7 +208,6 @@ function addToCartBtnsFunctions() {
 }
 
 //call add to cart buttons when page loaded
-addToCartBtnsFunctions();
 
 
 //getting info(product id of the clicked item) from products list  after add to cart was clicked. 
@@ -462,7 +461,7 @@ deleteBtn.addEventListener('click', arrow => {
     for (let p = 0; p < cartItems.length; p++) {
         for (let i = 0; i < itemsToDelete.length; i++) {
             if (p == itemsToDelete[i]) {
-                console.log(itemsToDelete[i], "=", p);
+              
                 cartItems[p].remove();
             }
         }
