@@ -25,85 +25,16 @@ function closeNavMenu() {
 
 var searchProductInput = document.querySelector("#productInput");
 var searchBtn = document.querySelector("#searchBtn");
-
-searchBtn.addEventListener("click", arrow => {
-    let keyWordToSearch = "";
-    keyWordToSearch = searchProductInput.value;
-
-    filteredProds = searchProducts(products, keyWordToSearch);
-    displayProducts(filteredProds);
-
-});
-
-//filterproducts , when no products to show , show the no item found message
-function searchProducts(prods, keyWord) {
-    keyWord = keyWord.toLowerCase();
-    let newArr = [];
-    for (let p = 0; p < prods.length; p++) {
-        let prodName = prods[p].product_name;
-
-        if (prodName.toLowerCase().includes(keyWord)) {
-            newArr.push(prods[p]);
-        }
-    }
-    prods = newArr;
-    return prods;
-}
-
-
+var paginateOrig = true;
+var filteredProds;
+var productsList = document.querySelector(".products-list");
 var pagesCount;
 var productsPage = document.querySelector(".products-pages-list");
 
-//products pagination
-function paginate(array, page_size, page_number) {
-    pagesCount = Math.round(array.length / page_size);
-    return array.slice((page_number - 1) * page_size, page_number * page_size);
-}
+var cart = [];
 
-// when page reload, automatically apply pagination for products
-products = paginate(products, 6, 1);
-// when page reload , after paginate invoked, call createPages for the user interface part
-createPages(pagesCount);
-
-//create pages to navigate
-function createPages(pagesCount) {
-    for (let p = 1; p <= pagesCount; p++) {
-        let pageItem = document.createElement("li");
-        pageItem.classList.add("page-item");
-        pageItem.innerHTML = p;
-
-        productsPage.appendChild(pageItem);
-    }
-
-}
-
-//pages btn 
-
-var pagesBtn = document.querySelectorAll(".page-item");
-
-//getting the button page index
-pagesBtn.forEach((item, index) => {
-    item.addEventListener("click", () => {
-        displayNewPage(index);
-        addToCartBtnsFunctions();
-        incrementQuantity();
-        decrementQuantity();
-    });
-
-});
-
-// get the page index then call again the products display to get the appropriate page display
-function displayNewPage(pageIndex) {
-    newPageProducts = paginate(origArray, 6, pageIndex + 1);
-    displayProducts(newPageProducts);
-}
 
 //populate products list with items
-
-const productsList = document.querySelector(".products-list");
-
-displayProducts(products);
-
 function displayProducts(products) {
 
     productsList.innerHTML = "";
@@ -148,12 +79,118 @@ function displayProducts(products) {
         productItem.append(productImage, productName, productPrice, productDecrementQuantityToBuyBtn
             , productQuantityToBuy, productIncrementQuantityToBuyBtn, addToCartBtn);
         productsList.append(productItem);
+    }
+}
+displayProducts(products);
 
+// when page reload, automatically apply pagination for products
 
+function checkToPaginate() {
+    if (paginateOrig) {
+        // on 1st page reload , after paginate invoked, call createPages for the user interface part
+        paginatedProducts = paginate(origArray, 6, 1);
+        displayProducts(paginatedProducts);
+        createPages(pagesCount);
+        clickedPagesButton();
+        incrementQuantity();
+        decrementQuantity();
+        addToCartBtnsFunctions();
+    }
+    else {
+        productsPage.innerHTML = "";
+        displayProducts(filteredProds);
+        paginate(filteredProds, 6, 1);
+        createPages(pagesCount);
+        clickedPagesButton();
+        incrementQuantity();
+        decrementQuantity();
+        addToCartBtnsFunctions();
     }
 
+}
+checkToPaginate();
+
+
+
+//return paged  products 
+function paginate(array, page_size, page_number) {
+    pagesCount = Math.round(array.length / page_size);
+    return array.slice((page_number - 1) * page_size, page_number * page_size);
+}
+
+
+
+//create buttons to navigate
+function createPages(pagesCount) {
+    
+    for (let p = 1; p <= pagesCount; p++) {
+        let pageItem = document.createElement("li");
+        pageItem.classList.add("page-item");
+        pageItem.innerHTML = p;
+
+        productsPage.appendChild(pageItem);
+    }
 
 }
+
+
+//pages btn 
+//getting the button page index
+function clickedPagesButton() {
+    let pagesBtn = document.querySelectorAll(".page-item");
+   
+        pagesBtn.forEach((item, index) => {
+            item.addEventListener("click", arrow => {
+                displayNewPage(index);
+                addToCartBtnsFunctions();
+                incrementQuantity();
+                decrementQuantity();
+            });
+
+        });
+}
+
+
+// get the page index then call again the products display to get the appropriate page display
+function displayNewPage(pageIndex) {
+    let newPageProducts;
+    newPageProducts = paginate(origArray, 6, pageIndex + 1);
+    displayProducts(newPageProducts);
+}
+
+
+searchBtn.addEventListener("click", arrow => {
+    productsList.innerHTML = "";
+    let keyWordToSearch = "";
+    keyWordToSearch = searchProductInput.value;
+
+    filteredProds = searchProducts(origArray, keyWordToSearch);
+    displayProducts(filteredProds);
+    addToCartBtnsFunctions();
+    incrementQuantity();
+    decrementQuantity();
+    paginateOrig = false;
+    checkToPaginate();
+});
+
+
+//filterproducts , when no products to show , show the no item found message
+function searchProducts(prods, keyWord) {
+    keyWord = keyWord.toLowerCase();
+    let newArr = [];
+    for (let p = 0; p < prods.length; p++) {
+        let prodName = prods[p].product_name;
+
+        if (prodName.toLowerCase().includes(keyWord)) {
+            newArr.push(prods[p]);
+        }
+    }
+    prods = newArr;
+    return prods;
+}
+
+
+
 /* CART */
 
 
@@ -161,11 +198,11 @@ function displayProducts(products) {
 const addedToCartMsg = document.querySelector(".added-to-cart-modal");
 function addToCartBtnsFunctions() {
     let addToCartBtns = document.querySelectorAll(".product-add-cart-btn");
-
     addToCartBtns.forEach((item, index) => {
         item.addEventListener('click', arrow => {
             getProductInfo(index);
             showAddedToCartMsg();
+
         })
     })
 }
@@ -173,7 +210,6 @@ function addToCartBtnsFunctions() {
 //call add to cart buttons when page loaded
 addToCartBtnsFunctions();
 
-var cart = [];
 
 //getting info(product id of the clicked item) from products list  after add to cart was clicked. 
 function getProductInfo(itemIndex) {
@@ -266,8 +302,7 @@ function incrementQuantity() {
 }
 
 function decrementQuantity() {
-    const decrementBtn = document.querySelectorAll(".quantity-decrease-btn");
-
+    let decrementBtn = document.querySelectorAll(".quantity-decrease-btn");
     //decrement quantity buttons
     decrementBtn.forEach((item, index) => {
         item.addEventListener('click', arrow => {
