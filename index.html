@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,7 +15,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
         integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <title>inSHAPE Shop</title>
+        <link rel="shortcut icon" href="images/favicon.ico" />
+    <title>inSHAPE</title>
 </head>
 
 <body>
@@ -29,9 +29,9 @@
                 <i class="fa-solid fa-times close-nav-icon icons"></i>
                 <ul class="nav-list">
                     <li class="nav-list-item"><a href="">About us</a></li>
-                    <li class="nav-list-item"><a href="">Products</a></li>
-                    <li class="nav-list-item"><a href="">Reviews</a></li>
-                    <li class="nav-list-item"><a href="">Contacts</a></li>
+                    <li class="nav-list-item"><a href="#products">Products</a></li>
+                    <li class="nav-list-item"><a href="#reviews">Reviews</a></li>
+                    <li class="nav-list-item"><a href="#contacts">Contacts</a></li>
                 </ul>
             </nav>
 
@@ -52,17 +52,18 @@
         </header>
 
         <div class="banner-container">
-            <img class="banner" src="images/main-banner.png" alt="inshape banner" srcset="">
+            <img class="banner" src="images/main-banner.png" alt="low cost gym tools and equipments available" srcset="">
         </div>
-
-        <section class="products">
+        
+        <section class="products" id="products">
+            <h3>Legit store that offers best home fitness equipments</h3>
             <div class="products-options">
                 <div class="search-product-input">
-                    <input type="text" name="productInput" id="productInput" placeholder="Type word to filter products">
+                    <input type="text" name="productInput" id="productInput" placeholder="Type prefer product">
                     <button id="searchBtn">Search</button>
                 </div>
             </div>
-            <p class="product-label">AVAILABLE PRODUCTS</p>
+            <div class="product-label">Available equipments and tools</div>
             <p class="no-item-message">
                 NO ITEM TO SHOW
             </p>
@@ -80,56 +81,56 @@
 
         </section>
 
-        <section class="feedbacks">
-            <p class="feedback-label">FEEDBACKS FROM CUSTOMERS</p>
-            <ul class="feedbacks-list">
-                <li class="feedback-item">
+        <section class="reviews" id="reviews">
+            <h3 class="review-label">Awesome reviews from customers</h3>
+            <ul class="reviews-list">
+                <li class="review-item">
                     <div class="buyer-image-container">
                         <img class="buyer-image" src="images//image-man.png" alt="buyer image">
                     </div>
                     <p class="buyer-name">Juan tamad</p>
-                    <p class="feedback">Ipsum lorem lorem Ipsum lorem lorem
+                    <p class="review">Ipsum lorem lorem Ipsum lorem lorem
                         Ipsum lorem lorem Ipsum lorem loremIpsum lorem lorem
                     </p>
-                    <p class="feedback-date">09-26-1994</p>
+                    <p class="review-date">09-26-1994</p>
                 </li>
 
-                <li class="feedback-item">
+                <li class="review-item">
                     <div class="buyer-image-container">
                         <img class="buyer-image" src="images//image-man.png" alt="buyer image">
                     </div>
                     <p class="buyer-name">Ben ten</p>
-                    <p class="feedback">Ipsum lorem lorem Ipsum lorem lorem
+                    <p class="review">Ipsum lorem lorem Ipsum lorem lorem
                         Ipsum lorem lorem Ipsum lorem loremIpsum lorem lorem
                     </p>
-                    <p class="feedback-date">09-26-1994</p>
+                    <p class="review-date">09-26-1994</p>
                 </li>
 
-                <li class="feedback-item">
+                <li class="review-item">
                     <div class="buyer-image-container">
                         <img class="buyer-image" src="images//image-man.png" alt="buyer image">
                     </div>
                     <p class="buyer-name">Pedro Penduko</p>
-                    <p class="feedback">Ipsum lorem lorem Ipsum lorem lorem
+                    <p class="review">Ipsum lorem lorem Ipsum lorem lorem
                         Ipsum lorem lorem Ipsum lorem loremIpsum lorem lorem
                     </p>
-                    <p class="feedback-date">09-26-1994</p>
+                    <p class="review-date">09-26-1994</p>
                 </li>
-                <li class="feedback-item">
+                <li class="review-item">
                     <div class="buyer-image-container">
                         <img class="buyer-image" src="images//image-man.png" alt="buyer image">
                     </div>
                     <p class="buyer-name">Sherwin Carlos</p>
-                    <p class="feedback">Ipsum lorem lorem Ipsum lorem lorem
+                    <p class="review">Ipsum lorem lorem Ipsum lorem lorem
                         Ipsum lorem lorem Ipsum lorem loremIpsum lorem lorem
                     </p>
-                    <p class="feedback-date">09-26-1994</p>
+                    <p class="review-date">09-26-1994</p>
                 </li>
             </ul>
             <button class="more-feedbacks-btn">See more feedbacks</button>
         </section>
     
-        <section class="contacts">
+        <section class="contacts" id="contacts">
 
             <div class="contacts-container">
                 <div class="phone-number">
