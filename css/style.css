@@ -11,6 +11,7 @@
 html,body{
     scroll-behavior: smooth;
 }
+
 * {
     margin: 0;
     padding: 0;
@@ -36,6 +37,9 @@ a {
     cursor: pointer;
 }
 
+section{
+    margin-bottom: 20px;
+}
 
 /* header nav */
 
@@ -85,10 +89,15 @@ header {
 
 .nav-list-item {
     margin-top: 20px;
+    cursor: pointer;
 }
 
 .nav-list-item a {
     color: var(--secondary-color);
+}
+
+.nav-list-item a:hover{
+    color: var(--light-color);
 }
 
 /* CART */
@@ -237,7 +246,7 @@ header {
 .search-product-input input[type="text"] {
     width: 100%;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--primary-color);
     outline: 0;
 }
 
@@ -470,22 +479,7 @@ header {
     font-size: 12px;
 }
 
-.more-feedbacks-btn {
-    background-color: var(--primary-color);
-    color: var(--light-color);
-    outline: none;
-    border: 1px solod var(--primary-color);
-    padding: 10px;
-    margin: 10px auto;
-    display: block;
-    width: 200px;
-    cursor: pointer;
 
-}
-
-.more-feedbacks-btn:hover {
-    background-color: var(--secondary-color);
-}
 
 /* CONTACTS SECTION */
 
@@ -512,4 +506,58 @@ header {
     display: inline-block;
     font-weight: 600;
     margin-bottom: 10px;
+}
+
+
+/* DESKTOP VERSION */
+@media only screen and (min-width: 768px){
+
+    .header-nav{
+        display: block;
+        min-height: 50px;
+    }
+
+    .header-nav .close-nav-icon, .header-nav .hamburger-icon{
+        display: none;
+    }
+    
+    .nav-list{
+        display: flex;
+    }
+
+    .nav-list-item{
+        margin: 0 20px;
+    }
+
+    .cart-icon{
+        z-index: 9999;
+    }
+    .banner {
+       height: 400px;
+    }
+    h3{
+        margin: 20px 0;
+    }
+    .products-options{
+        padding: 20px;
+    }
+    .search-product-input{
+        width: 50%;
+        margin: 0 auto;
+    }
+
+    .reviews-list{
+        width: 70%;
+        margin: 0 auto;
+    }
+    .contacts-container{
+        display: grid;
+        background-color: var(--primary-color);
+        grid-template-columns: 1fr 1fr 1fr;
+        border-radius: 10px;
+    }
+    
+    .contacts-container>div{
+       border-radius: 0;
+    }
 }
