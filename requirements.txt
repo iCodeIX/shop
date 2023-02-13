@@ -2,7 +2,7 @@
 
 General settings
 
-IDE: The programmer have used IDE ,to be specific VSCODE, to code the project.
+IDE: The programmer hasused IDE ,to be specific VSCODE, to code the project.
 The programmer connects IDE to his/her GITHUB repository to be able to save it online
 for backup when something unfortunate happened.
 
